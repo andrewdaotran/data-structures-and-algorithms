@@ -92,16 +92,62 @@ class SinglyLinkedList {
 		}
 		return currentNode
 	}
+	set(pos, val) {
+		// loop through the linked list to find the position
+		// change the value to the new value
+		// if (pos >= this.length || pos < 0) return null
+		// let counter = 0
+		// let currentNode = this.head
+		// while (pos !== counter) {
+		// 	currentNode = currentNode.next
+		// 	counter++
+		// }
+		let currentNode = this.get(pos)
+		if (currentNode) {
+			currentNode.val = val
+			return true
+		}
+		return false
+	}
+	insert(pos, val) {
+		// navigate through the linkedlist until you find the position
+		// save the value of the previous node and make its .next value the new inserted node
+		// save the value of the next node and make the new inserted node's next value that
+		// increment the length by 1
+		if (pos < 0 || pos > this.length) return false
+		if (pos === this.length) return Boolean(this.push(val))
+		if (pos === 0) return Boolean(this.unshift(val))
+
+		let insertedNode = new Node(val)
+		let previousNode = this.get(pos - 1)
+		let nextNode = previousNode.next
+
+		insertedNode.next = nextNode
+		previousNode.next = insertedNode
+		this.length++
+
+		return true
+	}
 }
 
-// const linkedList = new SinglyLinkedList()
+const linkedList = new SinglyLinkedList()
 
-// linkedList.push(3)
-// linkedList.push(4)
-// linkedList.push(5)
-// linkedList.push(6)
-// linkedList.push(7)
+linkedList.push(3)
+linkedList.push(4)
+linkedList.push(5)
+linkedList.push(6)
+linkedList.push(7)
 
 // console.log(linkedList.pop())
 // console.log(linkedList)
+// console.log(linkedList.get(2), linkedList.get(3))
 // console.log(linkedList.get(5))
+// console.log(linkedList.get(2))
+// linkedList.set(2, 1111)
+// console.log(linkedList.get(2))
+// linkedList.insert(3, 2500)
+// console.log(linkedList.get(2), linkedList.get(3))
+
+// console.log(linkedList.insert(0, 100))
+// console.log(linkedList.get(0))
+// console.log(linkedList.get(1))
