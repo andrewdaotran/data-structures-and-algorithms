@@ -128,6 +128,52 @@ class SinglyLinkedList {
 
 		return true
 	}
+
+	remove(pos) {
+		// navigate through the linked list with the get method to find the node we want and the previous node
+		// cut the connection with the previous node and connect it to the next node instead
+		// decrement length by 1
+
+		if (pos >= this.length || pos < 0) return undefined
+		if (pos === 0) return this.shift()
+		if (pos === this.length - 1) return this.pop()
+
+		const previousNode = this.get(pos - 1)
+		const removednode = previousNode.next
+		const nextNode = removednode.next
+
+		previousNode.next = nextNode
+		removednode.next = null
+
+		this.length--
+
+		return removednode.val
+	}
+
+	reverse() {
+		// make the old head the new tail
+		// store the newTail's next in a variable
+		// make the newTail's next the new Tail
+		// continue to traverse the linked list and continue
+
+		if (this.length === 0 || this.length === 1) return
+		let counter = 0
+		let currentNode = null
+		let nextNextNode = null
+		while (counter < this.length) {
+			if (counter === 0) {
+				this.tail = this.head
+				currentNode = this.tail
+			} else {
+				currentNode = this.get(counter)
+			}
+			nextNextNode = currentNode.next.next
+			currentNode.next.next = currentNode
+			counter++
+			if (counter === this.length - 1) this.head = currentNode
+		}
+		return this
+	}
 }
 
 const linkedList = new SinglyLinkedList()
@@ -139,7 +185,7 @@ linkedList.push(6)
 linkedList.push(7)
 
 // console.log(linkedList.pop())
-// console.log(linkedList)
+console.log(linkedList)
 // console.log(linkedList.get(2), linkedList.get(3))
 // console.log(linkedList.get(5))
 // console.log(linkedList.get(2))
@@ -151,3 +197,4 @@ linkedList.push(7)
 // console.log(linkedList.insert(0, 100))
 // console.log(linkedList.get(0))
 // console.log(linkedList.get(1))
+console.log(linkedList.reverse())
