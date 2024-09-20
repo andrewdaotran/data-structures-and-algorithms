@@ -150,29 +150,50 @@ class SinglyLinkedList {
 		return removednode.val
 	}
 
-	reverse() {
-		// make the old head the new tail
-		// store the newTail's next in a variable
-		// make the newTail's next the new Tail
-		// continue to traverse the linked list and continue
+	// reverse() {
+	// 	let node = this.head
+	// 	this.head = this.tail
+	// 	this.tail = node
 
-		if (this.length === 0 || this.length === 1) return
+	// 	let nextNode = null
+	// 	let prevNode = null
+	// 	let counter = 0
+
+	// 	while (counter < this.length) {
+	// 		nextNode = node.next
+	// 		node.next = prevNode
+	// 		prevNode = node
+	// 		node = nextNode
+	// 		counter++
+	// 	}
+	// 	return this
+	// }
+	reverse() {
+		let node = this.head
+		this.head = this.tail
+		this.tail = node
+
 		let counter = 0
-		let currentNode = null
-		let nextNextNode = null
+		let prev = null
+		let next
+
 		while (counter < this.length) {
-			if (counter === 0) {
-				this.tail = this.head
-				currentNode = this.tail
-			} else {
-				currentNode = this.get(counter)
-			}
-			nextNextNode = currentNode.next.next
-			currentNode.next.next = currentNode
+			next = node.next
+			node.next = prev
+			prev = node
+			node = next
 			counter++
-			if (counter === this.length - 1) this.head = currentNode
 		}
 		return this
+	}
+	print() {
+		let arr = []
+		let current = this.head
+		while (current) {
+			arr.push(current.val)
+			current = current.next
+		}
+		console.log(arr)
 	}
 }
 
@@ -185,7 +206,9 @@ linkedList.push(6)
 linkedList.push(7)
 
 // console.log(linkedList.pop())
-console.log(linkedList)
+// console.log(linkedList)
+linkedList.reverse()
+console.log(linkedList.print())
 // console.log(linkedList.get(2), linkedList.get(3))
 // console.log(linkedList.get(5))
 // console.log(linkedList.get(2))
@@ -197,4 +220,4 @@ console.log(linkedList)
 // console.log(linkedList.insert(0, 100))
 // console.log(linkedList.get(0))
 // console.log(linkedList.get(1))
-console.log(linkedList.reverse())
+// console.log(linkedList.reverse())
