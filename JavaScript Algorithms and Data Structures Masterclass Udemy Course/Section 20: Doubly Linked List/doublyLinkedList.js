@@ -52,6 +52,70 @@ class DoublyLinkedList {
 		}
 		return currentNode
 	}
+	pop() {
+		if (!this.head) return undefined
+		const poppedNode = this.tail
+		if (this.length === 1) {
+			this.head = null
+			this.tail = null
+		} else {
+			this.tail = poppedNode.prev
+			this.tail.next = null
+			poppedNode.prev = null
+		}
+		this.length--
+		return poppedNode
+	}
+	shift() {
+		if (!this.head) return undefined
+		const shiftedNode = this.head
+		if (this.length === 1) {
+			this.head = null
+			this.tail = null
+		} else {
+			this.head = shiftedNode.next
+			this.head.prev = null
+			shiftedNode.next = null
+		}
+
+		this.length--
+		return shiftedNode
+	}
+	unshift(val) {
+		const newHead = new Node(val)
+		const oldHead = this.head
+		this.head = newHead
+		if (!this.head) {
+			this.tail = newHead
+		} else {
+			newHead.next = oldHead
+			oldHead.prev = newHead
+		}
+		this.length++
+		return this
+	}
+	get(pos) {
+		if (pos >= this.length || pos < 0) return undefined
+		const half = Math.floor(this.length / 2)
+		let counter
+		let currentNode
+		if (pos > half) {
+			counter = this.length - 1
+			currentNode = this.tail
+			while (counter > pos) {
+				currentNode = currentNode.prev
+				counter--
+			}
+		} else {
+			counter = 0
+			currentNode = this.head
+			while (counter < pos) {
+				currentNode = currentNode.next
+				counter++
+			}
+		}
+		return currentNode
+	}
 }
 
 const doublyLinkedList = new DoublyLinkedList()
@@ -60,6 +124,8 @@ doublyLinkedList.push(10)
 doublyLinkedList.push(20)
 doublyLinkedList.push(30)
 doublyLinkedList.push(40)
+
+console.log(doublyLinkedList.get(2))
 
 // doublyLinkedList.print()
 // console.log(doublyLinkedList)
