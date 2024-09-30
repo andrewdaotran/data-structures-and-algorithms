@@ -19,7 +19,8 @@ class DoublyLinkedList {
 		let arrNext = []
 		let arrPrev = []
 		while (currentNode) {
-			arr.push(currentNode)
+			arr.push(currentNode.val)
+			// arr.push(currentNode)
 			currentNode = currentNode.next
 		}
 		console.log(arr)
@@ -41,17 +42,17 @@ class DoublyLinkedList {
 		return this
 	}
 
-	get(pos) {
-		if (pos < 0 || pos >= this.length) return null
-		let counter = 0
-		let currentNode = this.head
+	// get(pos) {
+	// 	if (pos < 0 || pos >= this.length) return null
+	// 	let counter = 0
+	// 	let currentNode = this.head
 
-		while (counter < pos) {
-			currentNode = currentNode.next
-			counter++
-		}
-		return currentNode
-	}
+	// 	while (counter < pos) {
+	// 		currentNode = currentNode.next
+	// 		counter++
+	// 	}
+	// 	return currentNode
+	// }
 	pop() {
 		if (!this.head) return undefined
 		const poppedNode = this.tail
@@ -96,10 +97,11 @@ class DoublyLinkedList {
 	}
 	get(pos) {
 		if (pos >= this.length || pos < 0) return undefined
-		const half = Math.floor(this.length / 2)
+		const half = Math.floor(this.length - 1 / 2)
 		let counter
 		let currentNode
 		if (pos > half) {
+			// console.log('working from end')
 			counter = this.length - 1
 			currentNode = this.tail
 			while (counter > pos) {
@@ -107,6 +109,7 @@ class DoublyLinkedList {
 				counter--
 			}
 		} else {
+			// console.log('working from start')
 			counter = 0
 			currentNode = this.head
 			while (counter < pos) {
@@ -115,6 +118,52 @@ class DoublyLinkedList {
 			}
 		}
 		return currentNode
+	}
+	set(pos, val) {
+		let nodeToBeUpdated = this.get(pos)
+		if (nodeToBeUpdated) {
+			nodeToBeUpdated.val = val
+			return true
+		}
+		return fase
+	}
+	insert(pos, val) {
+		if (pos < 0 || pos > this.length) return false
+		if (pos === 0) return Boolean(this.unshift(val))
+		if (pos === this.length) return Boolean(this.push(val))
+
+		const insertedNode = new Node(val)
+		const previousNode = this.get(pos - 1)
+		const nextNode = previousNode.next
+
+		previousNode.next = insertedNode
+		insertedNode.prev = previousNode
+
+		nextNode.prev = insertedNode
+		insertedNode.next = nextNode
+
+		this.length++
+
+		return true
+	}
+	remove(pos) {
+		if (pos < 0 || pos <= this.length) return undefined
+		if (pos === 0) return this.shift()
+		if (pos === this.length - 1) return this.pop()
+
+		const previousNode = this.get(pos - 1)
+		const removedNode = previousNode.next
+		const nextNode = removedNode.next
+
+		previousNode.next = nextNode
+		nextNode.prev = previousNode
+
+		removedNode.next = null
+		removedNode.prev = null
+
+		this.length--
+
+		return removedNode
 	}
 }
 
@@ -125,7 +174,11 @@ doublyLinkedList.push(20)
 doublyLinkedList.push(30)
 doublyLinkedList.push(40)
 
-console.log(doublyLinkedList.get(2))
+// console.log(doublyLinkedList.get(3))
+
+doublyLinkedList.insert(1, 100)
+doublyLinkedList.insert(3, 200)
+// console.log(doublyLinkedList.print())
 
 // doublyLinkedList.print()
 // console.log(doublyLinkedList)
