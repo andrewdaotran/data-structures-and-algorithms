@@ -28,4 +28,45 @@ class Tree {
 
 		return visited
 	}
+	DFSPreOrder() {
+		let visited = []
+		let currentNode = this.root
+		let traverse = (node) => {
+			visited.push(node.value)
+			if (node.left) traverse(node.left)
+			if (node.right) traverse(node.right)
+		}
+
+		traverse(currentNode)
+
+		return visited
+	}
+
+	DFSPostOrder() {
+		let visited = []
+		let currentNode = this.root
+
+		let traverse = (node) => {
+			if (node.left) traverse(node.left)
+			if (node.right) traverse(node.right)
+			visited.push(node.value)
+		}
+
+		traverse(currentNode)
+		return visited
+	}
+
+	DFSInOrder() {
+		let visited = []
+		let currentNode = this.root
+
+		let traverse = (node) => {
+			if (this.left) traverse(this.left)
+			visited.push(node.value)
+			if (this.right) traverse(this.right)
+		}
+
+		traverse(currentNode)
+		return visited
+	}
 }
